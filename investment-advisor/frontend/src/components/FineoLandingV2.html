@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FINEO - A new era of personal finance</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-card: rgba(255, 255, 255, 0.05);
+            --border-glass: rgba(255, 255, 255, 0.1);
+            --accent-purple: #9b59f5;
+            --accent-pink: #e91e63;
+            --accent-green: #22c55e;
+            --accent-gold: #ffd700;
+            --accent-blue: #4f8ef7;
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.6);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        .noise-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            padding: 1.5rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(to bottom, rgba(10,10,10,0.9), transparent);
+            backdrop-filter: blur(20px);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-icon {
+            width: 32px; height: 32px;
+            background: linear-gradient(135deg, #fff, #888);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.2rem;
+            color: #000;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover { color: var(--text-primary); }
+
+        .nav-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .btn-login {
+            color: var(--text-secondary);
+            background: none;
+            border: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        .btn-login:hover { color: var(--text-primary); }
+
+        .btn-signup {
+            background: var(--text-primary);
+            color: var(--bg-primary);
+            padding: 0.75rem 1.5rem;
+            border-radius: 999px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-signup:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 40px rgba(255,255,255,0.2);
+        }
+
+        /* Hero */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            padding: 0 2rem;
+        }
+
+        .hero-content {
+            text-align: center;
+            max-width: 800px;
+            z-index: 10;
+            position: relative;
+        }
+
+        .hero-headline {
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s ease forwards;
+        }
+
+        .hero-subtext {
+            font-size: clamp(1rem, 1.8vw, 1.15rem);
+            color: var(--text-secondary);
+            line-height: 1.7;
+            max-width: 550px;
+            margin: 0 auto 2.5rem;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s ease 0.2s forwards;
+        }
+
+        .btn-waitlist {
+            background: var(--bg-card);
+            color: var(--text-primary);
+            padding: 1rem 2.5rem;
+            border-radius: 999px;
+            font-size: 1rem;
+            font-weight: 500;
+            border: 1px solid var(--border-glass);
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s ease 0.4s forwards;
+            transition: all 0.3s ease;
+        }
+
+        .btn-waitlist:hover {
+            background: rgba(255,255,255,0.1);
+            transform: scale(1.05);
+            box-shadow: 0 0 40px rgba(255,255,255,0.1);
+        }
+
+        /* Floating Info Cards */
+        .floating-cards {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0; left: 0;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        .info-card {
+            position: absolute;
+            background: var(--bg-card);
+            border: 1px solid var(--border-glass);
+            border-radius: 16px;
+            padding: 1rem 1.25rem;
+            backdrop-filter: blur(16px);
+            animation: floatCard 6s ease-in-out infinite;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+        }
+
+        .info-card-label {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.25rem;
+        }
+
+        .info-card-value {
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .info-card.pos-1 {
+            top: 15%; left: 8%;
+            animation-delay: 0s;
+        }
+        .info-card.pos-1 .info-card-value { color: var(--accent-blue); }
+
+        .info-card.pos-2 {
+            top: 25%; right: 10%;
+            animation-delay: 2s;
+        }
+        .info-card.pos-2 .info-card-value { color: var(--accent-green); }
+
+        .info-card.pos-3 {
+            bottom: 35%; left: 12%;
+            animation-delay: 4s;
+        }
+        .info-card.pos-3 .info-card-value { color: var(--accent-purple); }
+
+        /* 3D Coins */
+        .coins-container {
+            position: absolute;
+            right: 5%;
+            bottom: 10%;
+            width: 400px;
+            height: 500px;
+            z-index: 8;
+            perspective: 1000px;
+        }
+
+        .coin-3d {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            transform-style: preserve-3d;
+            border-radius: 50%;
+        }
+
+        .coin-face-3d {
+            position: absolute;
+            width: 100%; height: 100%;
+            border-radius: 50%;
+            backface-visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: 700;
+            box-shadow: 0 0 30px rgba(255,255,255,0.3), inset 0 -5px 15px rgba(0,0,0,0.3);
+        }
+
+        .coin-front { transform: rotateY(0deg); }
+        .coin-back { transform: rotateY(180deg); }
+        .coin-edge-3d {
+            position: absolute;
+            width: 10px;
+            height: 100%;
+            left: 50%;
+            transform: translateX(-50%) rotateY(90deg);
+            transform-origin: center;
+        }
+
+        .coin-purple .coin-face-3d { background: linear-gradient(135deg, #b47cff, #9b59f5, #6c3483); }
+        .coin-purple .coin-edge-3d { background: linear-gradient(90deg, #6c3483, #9b59f5, #6c3483); }
+
+        .coin-pink .coin-face-3d { background: linear-gradient(135deg, #ff8fab, #ff6b9d, #c44569); }
+        .coin-pink .coin-edge-3d { background: linear-gradient(90deg, #c44569, #ff6b9d, #c44569); }
+
+        .coin-gold .coin-face-3d { background: linear-gradient(135deg, #ffed4a, #ffd700, #b8860b); }
+        .coin-gold .coin-edge-3d { background: linear-gradient(90deg, #b8860b, #ffd700, #b8860b); }
+
+        .coin-green .coin-face-3d { background: linear-gradient(135deg, #4ade80, #22c55e, #16a34a); }
+        .coin-green .coin-edge-3d { background: linear-gradient(90deg, #16a34a, #22c55e, #16a34a); }
+
+        .coin-1 { top: 0; left: 50px; animation: coinDrop1 3s ease-out forwards, coinFloat1 4s ease-in-out 3s infinite; }
+        .coin-2 { top: -50px; left: 150px; animation: coinDrop2 3.2s ease-out 0.3s forwards, coinFloat2 4s ease-in-out 3.5s infinite; }
+        .coin-3 { top: -30px; left: 250px; animation: coinDrop3 2.8s ease-out 0.6s forwards, coinFloat3 4s ease-in-out 3.6s infinite; }
+        .coin-4 { top: -80px; left: 100px; animation: coinDrop4 3.4s ease-out 0.9s forwards, coinFloat4 4s ease-in-out 3.9s infinite; }
+        .coin-5 { top: -40px; left: 180px; animation: coinDrop5 3.1s ease-out 1.2s forwards, coinFloat5 4s ease-in-out 4.1s infinite; }
+
+        @keyframes coinDrop1 {
+            0% { transform: translateY(-200px) rotateX(0deg) rotateY(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            60% { transform: translateY(180px) rotateX(360deg) rotateY(180deg); }
+            80% { transform: translateY(160px) rotateX(400deg) rotateY(200deg); }
+            100% { transform: translateY(170px) rotateX(380deg) rotateY(190deg); }
+        }
+
+        @keyframes coinDrop2 {
+            0% { transform: translateY(-250px) rotateX(0deg) rotateY(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            60% { transform: translateY(200px) rotateX(-360deg) rotateY(270deg); }
+            80% { transform: translateY(180px) rotateX(-380deg) rotateY(290deg); }
+            100% { transform: translateY(190px) rotateX(-370deg) rotateY(280deg); }
+        }
+
+        @keyframes coinDrop3 {
+            0% { transform: translateY(-180px) rotateX(0deg) rotateZ(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            60% { transform: translateY(220px) rotateX(270deg) rotateZ(180deg); }
+            80% { transform: translateY(200px) rotateX(290deg) rotateZ(190deg); }
+            100% { transform: translateY(210px) rotateX(280deg) rotateZ(185deg); }
+        }
+
+        @keyframes coinDrop4 {
+            0% { transform: translateY(-300px) rotateY(0deg) rotateZ(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            60% { transform: translateY(150px) rotateY(360deg) rotateZ(360deg); }
+            80% { transform: translateY(130px) rotateY(380deg) rotateZ(375deg); }
+            100% { transform: translateY(140px) rotateY(370deg) rotateZ(365deg); }
+        }
+
+        @keyframes coinDrop5 {
+            0% { transform: translateY(-220px) rotateX(0deg) rotateY(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            60% { transform: translateY(240px) rotateX(-270deg) rotateY(-180deg); }
+            80% { transform: translateY(220px) rotateX(-290deg) rotateY(-200deg); }
+            100% { transform: translateY(230px) rotateX(-280deg) rotateY(-190deg); }
+        }
+
+        @keyframes coinFloat1 {
+            0%, 100% { transform: translateY(170px) rotateX(380deg) rotateY(190deg); }
+            50% { transform: translateY(155px) rotateX(380deg) rotateY(190deg); }
+        }
+
+        @keyframes coinFloat2 {
+            0%, 100% { transform: translateY(190px) rotateX(-370deg) rotateY(280deg); }
+            50% { transform: translateY(170px) rotateX(-370deg) rotateY(280deg); }
+        }
+
+        @keyframes coinFloat3 {
+            0%, 100% { transform: translateY(210px) rotateX(280deg) rotateZ(185deg); }
+            50% { transform: translateY(198px) rotateX(280deg) rotateZ(185deg); }
+        }
+
+        @keyframes coinFloat4 {
+            0%, 100% { transform: translateY(140px) rotateY(370deg) rotateZ(365deg); }
+            50% { transform: translateY(122px) rotateY(370deg) rotateZ(365deg); }
+        }
+
+        @keyframes coinFloat5 {
+            0%, 100% { transform: translateY(230px) rotateX(-280deg) rotateY(-190deg); }
+            50% { transform: translateY(220px) rotateX(-280deg) rotateY(-190deg); }
+        }
+
+        /* Metallic Wave */
+        .wave-container {
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 35%;
+            z-index: 2;
+            overflow: hidden;
+        }
+
+        .wave {
+            position: absolute;
+            bottom: -30%; left: -10%; right: -10%;
+            height: 100%;
+            background: linear-gradient(180deg, transparent 0%, rgba(100,100,100,0.1) 30%, rgba(150,150,150,0.2) 50%, rgba(100,100,100,0.15) 70%, rgba(80,80,80,0.1) 100%);
+            border-radius: 50% 50% 0 0;
+            animation: waveMove 8s ease-in-out infinite;
+            filter: blur(2px);
+        }
+
+        .wave::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.05) 50%, transparent 100%);
+            animation: shimmer 4s ease-in-out infinite;
+        }
+
+        /* Scroll Indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            opacity: 0;
+            animation: fadeIn 1s ease 2s forwards;
+            z-index: 20;
+        }
+
+        .scroll-text {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .scroll-arrow {
+            width: 24px; height: 24px;
+            border: 2px solid var(--text-secondary);
+            border-top: none;
+            border-left: none;
+            transform: rotate(45deg);
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        @keyframes floatCard {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes waveMove {
+            0%, 100% { transform: translateY(0) scaleX(1); }
+            50% { transform: translateY(-15px) scaleX(1.05); }
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0) rotate(45deg); }
+            40% { transform: translateY(-10px) rotate(45deg); }
+            60% { transform: translateY(-5px) rotate(45deg); }
+        }
+
+        .bg-gradient {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(ellipse at 20% 50%, rgba(155,89,245,0.15) 0%, transparent 50%),
+                        radial-gradient(ellipse at 80% 30%, rgba(79,142,247,0.1) 0%, transparent 40%);
+            z-index: 1;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .coins-container {
+                width: 300px;
+                height: 350px;
+                right: 2%;
+            }
+            .coin-3d { width: 80px; height: 80px; }
+            .coin-1 { left: 30px; }
+            .coin-2 { left: 100px; }
+            .coin-3 { left: 180px; }
+            .coin-4 { left: 60px; }
+            .coin-5 { left: 140px; }
+            .info-card { padding: 0.75rem 1rem; }
+            .info-card-value { font-size: 1rem; }
+        }
+
+        @media (max-width: 768px) {
+            nav { padding: 1rem 1.5rem; }
+            .nav-links { display: none; }
+            .hero { padding: 6rem 1.5rem 2rem; }
+            .hero-headline { font-size: 2.5rem; }
+            .coins-container { display: none; }
+            .info-card.pos-1 { top: 10%; left: 5%; }
+            .info-card.pos-2 { top: 18%; right: 5%; }
+            .info-card.pos-3 { bottom: 25%; left: 5%; }
+            .wave-container { height: 25%; }
+        }
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0.5rem;
+        }
+
+        .menu-toggle span {
+            width: 24px; height: 2px;
+            background: var(--text-primary);
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle { display: flex; }
+        }
+    </style>
+</head>
+<body>
+    <div class="noise-overlay"></div>
+
+    <nav>
+        <div class="logo">
+            <div class="logo-icon">F</div>
+            FINEO
+        </div>
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#personal">Personal</a></li>
+            <li><a href="#business">Business</a></li>
+        </ul>
+        <div class="nav-actions">
+            <button class="btn-login">Log in</button>
+            <button class="btn-signup">Sign up</button>
+        </div>
+        <button class="menu-toggle" aria-label="Toggle menu">
+            <span></span><span></span><span></span>
+        </button>
+    </nav>
+
+    <section class="hero" id="home">
+        <div class="bg-gradient"></div>
+
+        <div class="floating-cards">
+            <div class="info-card pos-1">
+                <div class="info-card-label">Portfolio Value</div>
+                <div class="info-card-value">₹12.5L</div>
+            </div>
+            <div class="info-card pos-2">
+                <div class="info-card-label">Returns</div>
+                <div class="info-card-value">+14.2%</div>
+            </div>
+            <div class="info-card pos-3">
+                <div class="info-card-label">Risk Score</div>
+                <div class="info-card-value">Medium</div>
+            </div>
+        </div>
+
+        <div class="coins-container">
+            <div class="coin-3d coin-purple coin-1">
+                <div class="coin-face-3d coin-front">₹</div>
+                <div class="coin-face-3d coin-back">₹</div>
+                <div class="coin-edge-3d"></div>
+            </div>
+            <div class="coin-3d coin-pink coin-2">
+                <div class="coin-face-3d coin-front">$</div>
+                <div class="coin-face-3d coin-back">$</div>
+                <div class="coin-edge-3d"></div>
+            </div>
+            <div class="coin-3d coin-gold coin-3">
+                <div class="coin-face-3d coin-front">₿</div>
+                <div class="coin-face-3d coin-back">₿</div>
+                <div class="coin-edge-3d"></div>
+            </div>
+            <div class="coin-3d coin-green coin-4">
+                <div class="coin-face-3d coin-front">€</div>
+                <div class="coin-face-3d coin-back">€</div>
+                <div class="coin-edge-3d"></div>
+            </div>
+            <div class="coin-3d coin-purple coin-5">
+                <div class="coin-face-3d coin-front">£</div>
+                <div class="coin-face-3d coin-back">£</div>
+                <div class="coin-edge-3d"></div>
+            </div>
+        </div>
+
+        <div class="hero-content">
+            <h1 class="hero-headline">A new era of<br>personal finance</h1>
+            <p class="hero-subtext">The world's most advanced digital clinic to help you live longer, prevent disease, and feel your best</p>
+            <button class="btn-waitlist">Join waitlist</button>
+        </div>
+
+        <div class="wave-container">
+            <div class="wave"></div>
+        </div>
+
+        <div class="scroll-indicator">
+            <span class="scroll-text">Scroll</span>
+            <div class="scroll-arrow"></div>
+        </div>
+    </section>
+
+    <script>
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) target.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        document.querySelector('.btn-waitlist').addEventListener('click', () => {
+            alert('Thanks for your interest! The waitlist will open soon.');
+        });
+
+        document.querySelector('.btn-signup').addEventListener('click', () => {
+            alert('Sign up coming soon!');
+        });
+
+        document.querySelector('.btn-login').addEventListener('click', () => {
+            alert('Login coming soon!');
+        });
+
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+
+        menuToggle.addEventListener('click', () => {
+            if (navLinks.style.display === 'flex') {
+                navLinks.style.display = 'none';
+            } else {
+                navLinks.style.display = 'flex';
+                navLinks.style.cssText = 'position:absolute;top:100%;left:0;right:0;flex-direction:column;background:rgba(10,10,10,0.95);padding:2rem;backdrop-filter:blur(20px)';
+            }
+        });
+
+        // Mouse parallax for floating cards
+        document.addEventListener('mousemove', (e) => {
+            const mouseX = e.clientX / window.innerWidth - 0.5;
+            const mouseY = e.clientY / window.innerHeight - 0.5;
+
+            document.querySelectorAll('.info-card').forEach((card, index) => {
+                const speed = (index + 1) * 10;
+                card.style.transform = `translate(${mouseX * speed}px, ${mouseY * speed}px)`;
+            });
+        });
+    </script>
+</body>
+</html>
