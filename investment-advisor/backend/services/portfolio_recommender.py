@@ -2,15 +2,11 @@
 Portfolio allocation and recommendation service.
 Handles asset selection based on risk profile and allocation strategy.
 """
-
 import json
 from typing import List, Dict, Any
 from .risk import RiskScorer
-
 class PortfolioRecommender:
     """Handles portfolio allocation and asset recommendations."""
-    
-    # Predefined asset dataset
     ASSETS_DATASET = {
         'debt': [
             {
@@ -73,30 +69,21 @@ class PortfolioRecommender:
             }
         ]
     }
-    
     @classmethod
     def allocate_portfolio(cls, amount: float, risk_level: str, horizon: int, goal: str) -> Dict[str, Any]:
         """
         Generate portfolio allocation based on user input.
-        
         Args:
             amount: Total investment amount
             risk_level: User's risk tolerance
             horizon: Investment horizon in years
             goal: Financial goal
-            
         Returns:
             Complete portfolio allocation with recommendations
         """
-        
-        # Step 1: Assess risk profile
         risk_assessment = RiskScorer.calculate_risk_score(risk_level, horizon, goal)
         profile = risk_assessment['profile']
-        
-        # Step 2: Get allocation strategy
         allocation_strategy = RiskScorer.get_allocation_strategy(profile)
-        
-        # Step 3: Calculate allocations
         allocations = {}
         for asset_class, percentage in allocation_strategy.items():
             allocated_amount = (amount * percentage) / 100
@@ -104,16 +91,9 @@ class PortfolioRecommender:
                 'percentage': percentage,
                 'amount': allocated_amount
             }
-        
-        # Step 4: Select specific assets
         selected_assets = cls._select_assets(allocation_strategy)
-        
-        # Step 5: Distribute amounts among selected assets
         portfolio_assets = cls._distribute_amounts(selected_assets, allocations)
-        
-        # Step 6: Calculate expected returns
         expected_return = cls._calculate_expected_return(portfolio_assets)
-        
         return {
             'portfolio_type': profile,
             'risk_assessment': risk_assessment,
@@ -122,52 +102,38 @@ class PortfolioRecommender:
             'expected_return': round(cls._calculate_expected_return(portfolio_assets), 2),
             'total_amount': amount
         }
-    
     @classmethod
     def _select_assets(cls, allocation_strategy: Dict[str, int]) -> Dict[str, List[Dict]]:
         """
         Select specific assets based on allocation strategy.
         """
         selected = {}
-        
         for asset_class, percentage in allocation_strategy.items():
             if percentage > 0 and asset_class in cls.ASSETS_DATASET:
-                # Select assets from the dataset
                 available_assets = cls.ASSETS_DATASET[asset_class]
-                
-                # For simplicity, select top assets based on expected return
                 if asset_class == 'stocks':
-                    # Select top 3 stocks
-                    selected[asset_class] = sorted(available_assets, 
-                                               key=lambda x: x['expected_return'], 
+                    selected[asset_class] = sorted(available_assets,
+                                               key=lambda x: x['expected_return'],
                                                reverse=True)[:3]
                 elif asset_class == 'mutual_funds':
-                    # Select top 2 funds
-                    selected[asset_class] = sorted(available_assets, 
-                                               key=lambda x: x['expected_return'], 
+                    selected[asset_class] = sorted(available_assets,
+                                               key=lambda x: x['expected_return'],
                                                reverse=True)[:2]
                 else:
-                    # Select all debt instruments
                     selected[asset_class] = available_assets
-                    
         return selected
-    
     @classmethod
-    def _distribute_amounts(cls, selected_assets: Dict[str, List[Dict]], 
+    def _distribute_amounts(cls, selected_assets: Dict[str, List[Dict]],
                            allocations: Dict[str, Dict]) -> List[Dict]:
         """
         Distribute allocated amounts among selected assets.
         """
         portfolio_assets = []
-        
         for asset_class, assets in selected_assets.items():
             if asset_class in allocations:
                 total_amount = allocations[asset_class]['amount']
                 percentage = allocations[asset_class]['percentage']
-                
-                # Distribute equally among selected assets
                 amount_per_asset = total_amount / len(assets)
-                
                 for asset in assets:
                     portfolio_assets.append({
                         'name': asset['name'],
@@ -177,9 +143,7 @@ class PortfolioRecommender:
                         'percentage': percentage / len(assets),
                         'expected_return': asset['expected_return']
                     })
-        
         return portfolio_assets
-    
     @classmethod
     def _calculate_expected_return(cls, assets: List[Dict]) -> float:
         """
@@ -187,11 +151,9 @@ class PortfolioRecommender:
         """
         if not assets:
             return 0.0
-            
         total_amount = sum(asset['invested_amount'] for asset in assets)
         weighted_return = sum(
-            asset['invested_amount'] * asset['expected_return'] 
+            asset['invested_amount'] * asset['expected_return']
             for asset in assets
         )
-        
         return round(weighted_return / total_amount, 2) if total_amount > 0 else 0.0

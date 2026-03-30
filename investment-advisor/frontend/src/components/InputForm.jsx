@@ -35,7 +35,7 @@ const InputForm = ({ onSubmit, loading }) => {
           <p className="form-subtitle">Tell us about your investment goals</p>
 
           <form onSubmit={handleSubmit}>
-            {/* Investment Amount */}
+            {}
             <div className="form-group">
               <label className="form-label">Investment Amount (₹)</label>
               <input
@@ -49,7 +49,7 @@ const InputForm = ({ onSubmit, loading }) => {
               />
             </div>
 
-            {/* Risk Level */}
+            {}
             <div className="form-group">
               <label className="form-label">Risk Level</label>
               <div className="radio-group">
@@ -86,7 +86,7 @@ const InputForm = ({ onSubmit, loading }) => {
               </div>
             </div>
 
-            {/* Time Horizon */}
+            {}
             <div className="form-group">
               <label className="form-label">Time Horizon: {formData.horizon} years</label>
               <div className="range-container">
@@ -102,7 +102,7 @@ const InputForm = ({ onSubmit, loading }) => {
               </div>
             </div>
 
-            {/* Financial Goal */}
+            {}
             <div className="form-group">
               <label className="form-label">Financial Goal</label>
               <select
@@ -148,36 +148,36 @@ const InputForm = ({ onSubmit, loading }) => {
           align-items: center;
           justify-content: center;
         }
-        
+
         .container {
           max-width: 600px;
           width: 100%;
           margin: 0 auto;
         }
-        
+
         .form-card {
           padding: 2.5rem;
         }
-        
+
         .form-title {
           font-size: 1.875rem;
           margin-bottom: 0.5rem;
           text-align: center;
         }
-        
+
         .form-subtitle {
           color: var(--text-muted);
           text-align: center;
           margin-bottom: 2rem;
         }
-        
+
         .submit-btn {
           width: 100%;
           margin-top: 1rem;
           padding: 1.125rem;
           font-size: 1.1rem;
         }
-        
+
         .spinner {
           width: 20px;
           height: 20px;
@@ -186,7 +186,7 @@ const InputForm = ({ onSubmit, loading }) => {
           border-radius: 50%;
           animation: spin 0.8s linear infinite;
         }
-        
+
         @keyframes spin {
           to { transform: rotate(360deg); }
         }

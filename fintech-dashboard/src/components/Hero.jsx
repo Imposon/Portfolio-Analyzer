@@ -33,21 +33,21 @@ export default function Hero() {
 
   return (
     <section id="hero" className="relative min-h-screen flex items-center overflow-hidden">
-      {/* Background Elements */}
+      {}
       <div className="absolute inset-0 z-0">
         <div className="absolute top-20 left-20 w-72 h-72 bg-cyan-500/20 rounded-full blur-[120px]" />
         <div className="absolute bottom-20 right-20 w-96 h-96 bg-purple-500/20 rounded-full blur-[120px]" />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-radial from-cyan-500/10 to-transparent rounded-full blur-3xl" />
       </div>
 
-      {/* 3D Scene - Right Side */}
+      {}
       <div className="absolute inset-0 z-10">
         <Scene3D />
       </div>
 
-      {/* Content */}
+      {}
       <div className="relative z-20 max-w-7xl mx-auto px-6 py-32 grid lg:grid-cols-2 gap-12 items-center">
-        {/* Left Content - Clean Landing */}
+        {}
         <div className="space-y-8 lg:pr-12">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -79,7 +79,7 @@ export default function Hero() {
             transition={{ duration: 0.8, delay: 0.6 }}
             className="text-lg text-gray-400 max-w-md"
           >
-            Get personalized investment recommendations powered by AI. 
+            Get personalized investment recommendations powered by AI.
             Build your portfolio based on your risk profile and financial goals.
           </motion.p>
 
@@ -103,7 +103,7 @@ export default function Hero() {
             </motion.button>
           </motion.div>
 
-          {/* Trust Indicators */}
+          {}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -124,11 +124,11 @@ export default function Hero() {
           </motion.div>
         </div>
 
-        {/* Right Content - Reserved for 3D Scene */}
+        {}
         <div className="hidden lg:block h-[600px]" />
       </div>
 
-      {/* Scroll Indicator */}
+      {}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}

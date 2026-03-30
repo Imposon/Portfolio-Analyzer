@@ -41,10 +41,8 @@ export default function Results() {
   const [aiAnalysis, setAIAnalysis] = useState(null)
   const [loadingAI, setLoadingAI] = useState(false)
 
-  // Calculate total investment from assets or portfolio amount
   const totalInvestment = assets.reduce((sum, asset) => sum + (asset.invested_amount || 0), 0) || portfolio?.amount || 0
 
-  // Format currency
   const formatCurrency = (amount) => {
     return new Intl.NumberFormat('en-IN', {
       style: 'currency',
@@ -88,17 +86,17 @@ export default function Results() {
 
     setLoadingAI(true)
     try {
-      // Use the API service with timeout and fallback
+
       const data = await investmentAPI.getAIAnalysis({
         portfolio: portfolio,
         assets: assets
       })
-      
+
       setAIAnalysis(data.analysis || 'Analysis not available')
       setShowAIAnalysis(true)
     } catch (error) {
       console.error('AI Analysis error:', error)
-      // Fallback should already be handled by API service, but just in case
+
       setAIAnalysis(generateFallbackAnalysis())
       setShowAIAnalysis(true)
     } finally {
@@ -106,12 +104,11 @@ export default function Results() {
     }
   }
 
-  // Generate fallback analysis when API fails
   const generateFallbackAnalysis = () => {
     const totalValue = assets.reduce((sum, asset) => sum + (asset.invested_amount || 0), 0)
     const avgReturn = portfolio?.expected_return || 12
     const dailyRevenue = (totalValue * (avgReturn / 100)) / 365
-    
+
     return `## AI Investment Analysis
 
 ### Why This Portfolio Suits You
@@ -199,14 +196,14 @@ Based on your total investment of **${formatCurrency(totalValue)}** and expected
 
   return (
     <section className="relative min-h-screen py-20">
-      {/* Background Elements */}
+      {}
       <div className="absolute inset-0 z-0">
         <div className="absolute top-20 left-20 w-72 h-72 bg-cyan-500/20 rounded-full blur-[120px]" />
         <div className="absolute bottom-20 right-20 w-96 h-96 bg-purple-500/20 rounded-full blur-[120px]" />
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-6">
-        {/* Header */}
+        {}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -220,7 +217,7 @@ Based on your total investment of **${formatCurrency(totalValue)}** and expected
           </p>
         </motion.div>
 
-        {/* Portfolio Overview */}
+        {}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -252,7 +249,7 @@ Based on your total investment of **${formatCurrency(totalValue)}** and expected
           </div>
         </motion.div>
 
-        {/* Investment Recommendations */}
+        {}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -262,7 +259,7 @@ Based on your total investment of **${formatCurrency(totalValue)}** and expected
           <h2 className="text-3xl font-bold gradient-text text-center mb-8">
             Investment Recommendations
           </h2>
-          
+
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {assets.map((asset, index) => (
               <motion.div
@@ -273,14 +270,14 @@ Based on your total investment of **${formatCurrency(totalValue)}** and expected
                 whileHover={{ y: -5 }}
                 className="glass-card p-6 rounded-xl hover:shadow-xl transition-all duration-300"
               >
-                {/* Asset Header */}
+                {}
                 <div className="flex items-center justify-between mb-4">
                   <div className={`p-3 rounded-xl bg-gradient-to-r ${getAssetColor(asset.category)}`}>
                     <span className="text-2xl">{getAssetIcon(asset.category)}</span>
                   </div>
                   <div className={`flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${
-                    asset.expected_return >= 0 
-                      ? 'bg-green-500/20 text-green-400' 
+                    asset.expected_return >= 0
+                      ? 'bg-green-500/20 text-green-400'
                       : 'bg-red-500/20 text-red-400'
                   }`}>
                     {asset.expected_return >= 0 ? <TrendingUp /> : <TrendingDown />}
@@ -288,7 +285,7 @@ Based on your total investment of **${formatCurrency(totalValue)}** and expected
                   </div>
                 </div>
 
-                {/* Asset Info */}
+                {}
                 <div>
                   <h3 className="font-semibold text-white mb-2">{asset.name}</h3>
                   <p className="text-sm text-gray-400 mb-3">{asset.category}</p>
@@ -318,7 +315,7 @@ Based on your total investment of **${formatCurrency(totalValue)}** and expected
           </div>
         </motion.div>
 
-        {/* AI Analysis Section */}
+        {}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -347,7 +344,7 @@ Based on your total investment of **${formatCurrency(totalValue)}** and expected
           </motion.button>
         </motion.div>
 
-        {/* AI Analysis Modal */}
+        {}
         {showAIAnalysis && aiAnalysis && (
           <motion.div
             initial={{ opacity: 0 }}
@@ -370,15 +367,15 @@ Based on your total investment of **${formatCurrency(totalValue)}** and expected
                   ✕
                 </button>
               </div>
-              
+
               <div className="prose prose-invert max-w-none">
-                <div 
-                  dangerouslySetInnerHTML={{ 
+                <div
+                  dangerouslySetInnerHTML={{
                     __html: aiAnalysis
                       .replace(/## /g, '<h3 class="text-xl font-bold text-white mb-4">')
                       .replace(/\*\*(.*?)\*\*/g, '<strong class="text-cyan-400">$1</strong>')
                       .replace(/\n/g, '<br class="mb-2">')
-                  }} 
+                  }}
                   className="text-gray-300 leading-relaxed"
                 />
               </div>
@@ -386,7 +383,7 @@ Based on your total investment of **${formatCurrency(totalValue)}** and expected
           </motion.div>
         )}
 
-        {/* Action Buttons */}
+        {}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}

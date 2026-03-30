@@ -12,7 +12,6 @@ const Dashboard = ({ portfolio, onAnalyze }) => {
       });
       setAnimatedAmounts(initialAmounts);
 
-      // Animate amounts
       portfolio.assets.forEach((asset, index) => {
         const duration = 1000;
         const steps = 30;
@@ -42,9 +41,9 @@ const Dashboard = ({ portfolio, onAnalyze }) => {
     <section className="dashboard-section">
       <div className="container">
         <h2 className="section-title animate-fade-in">Your Portfolio</h2>
-        
+
         <div className="dashboard-grid">
-          {/* Allocation Summary */}
+          {}
           <div className="card allocation-card animate-fade-in delay-100">
             <h3 className="card-title">Allocation</h3>
             <div className="allocation-bars">
@@ -54,8 +53,8 @@ const Dashboard = ({ portfolio, onAnalyze }) => {
                   <span className="allocation-value">{(allocation.equity * 100).toFixed(0)}%</span>
                 </div>
                 <div className="progress-bar">
-                  <div 
-                    className="progress-fill equity" 
+                  <div
+                    className="progress-fill equity"
                     style={{ width: `${allocation.equity * 100}%` }}
                   />
                 </div>
@@ -66,8 +65,8 @@ const Dashboard = ({ portfolio, onAnalyze }) => {
                   <span className="allocation-value">{(allocation.debt * 100).toFixed(0)}%</span>
                 </div>
                 <div className="progress-bar">
-                  <div 
-                    className="progress-fill debt" 
+                  <div
+                    className="progress-fill debt"
                     style={{ width: `${allocation.debt * 100}%` }}
                   />
                 </div>
@@ -78,8 +77,8 @@ const Dashboard = ({ portfolio, onAnalyze }) => {
                   <span className="allocation-value">{(allocation.funds * 100).toFixed(0)}%</span>
                 </div>
                 <div className="progress-bar">
-                  <div 
-                    className="progress-fill funds" 
+                  <div
+                    className="progress-fill funds"
                     style={{ width: `${allocation.funds * 100}%` }}
                   />
                 </div>
@@ -87,7 +86,7 @@ const Dashboard = ({ portfolio, onAnalyze }) => {
             </div>
           </div>
 
-          {/* Asset List */}
+          {}
           <div className="card assets-card animate-fade-in delay-200">
             <h3 className="card-title">Selected Assets</h3>
             <div className="assets-list">
@@ -108,7 +107,7 @@ const Dashboard = ({ portfolio, onAnalyze }) => {
             </div>
           </div>
 
-          {/* AI Explanation Panel */}
+          {}
           <div className="card ai-card animate-fade-in delay-300">
             <h3 className="card-title">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -118,8 +117,8 @@ const Dashboard = ({ portfolio, onAnalyze }) => {
             </h3>
             <div className="ai-content">
               {ai_explanation ? (
-                <div className="ai-text" dangerouslySetInnerHTML={{ 
-                  __html: ai_explanation.replace(/\n/g, '<br/>') 
+                <div className="ai-text" dangerouslySetInnerHTML={{
+                  __html: ai_explanation.replace(/\n/g, '<br/>')
                 }} />
               ) : (
                 <p className="ai-placeholder">AI analysis loading...</p>
@@ -142,51 +141,51 @@ const Dashboard = ({ portfolio, onAnalyze }) => {
           padding: 4rem 2rem;
           min-height: 100vh;
         }
-        
+
         .container {
           max-width: 1200px;
           margin: 0 auto;
         }
-        
+
         .section-title {
           font-size: 2rem;
           margin-bottom: 2rem;
           text-align: center;
         }
-        
+
         .dashboard-grid {
           display: grid;
           grid-template-columns: repeat(3, 1fr);
           gap: 1.5rem;
           margin-bottom: 2rem;
         }
-        
+
         @media (max-width: 1024px) {
           .dashboard-grid {
             grid-template-columns: repeat(2, 1fr);
           }
         }
-        
+
         @media (max-width: 768px) {
           .dashboard-grid {
             grid-template-columns: 1fr;
           }
         }
-        
+
         .allocation-card {
           grid-row: span 1;
         }
-        
+
         .assets-card {
           grid-row: span 1;
           max-height: 500px;
           overflow-y: auto;
         }
-        
+
         .ai-card {
           grid-row: span 1;
         }
-        
+
         .card-title {
           font-size: 1.25rem;
           margin-bottom: 1.5rem;
@@ -194,56 +193,56 @@ const Dashboard = ({ portfolio, onAnalyze }) => {
           align-items: center;
           gap: 0.5rem;
         }
-        
+
         .allocation-bars {
           display: flex;
           flex-direction: column;
           gap: 1.25rem;
         }
-        
+
         .allocation-header {
           display: flex;
           justify-content: space-between;
           margin-bottom: 0.5rem;
           font-size: 0.9rem;
         }
-        
+
         .allocation-value {
           color: var(--accent-blue);
           font-weight: 600;
         }
-        
+
         .progress-bar {
           height: 8px;
           background: rgba(255, 255, 255, 0.1);
           border-radius: 4px;
           overflow: hidden;
         }
-        
+
         .progress-fill {
           height: 100%;
           border-radius: 4px;
           transition: width 1s ease-out;
         }
-        
+
         .progress-fill.equity {
           background: linear-gradient(90deg, #4f8ef7, #6b8cff);
         }
-        
+
         .progress-fill.debt {
           background: linear-gradient(90deg, #22c55e, #4ade80);
         }
-        
+
         .progress-fill.funds {
           background: linear-gradient(90deg, #9b59f5, #b47cff);
         }
-        
+
         .assets-list {
           display: flex;
           flex-direction: column;
           gap: 1rem;
         }
-        
+
         .asset-item {
           display: flex;
           justify-content: space-between;
@@ -253,66 +252,66 @@ const Dashboard = ({ portfolio, onAnalyze }) => {
           border-radius: 12px;
           border: 1px solid var(--border-glass);
         }
-        
+
         .asset-info {
           display: flex;
           flex-direction: column;
           gap: 0.25rem;
         }
-        
+
         .asset-name {
           font-weight: 500;
           font-size: 0.95rem;
         }
-        
+
         .asset-category {
           font-size: 0.8rem;
           color: var(--text-muted);
         }
-        
+
         .asset-values {
           display: flex;
           flex-direction: column;
           align-items: flex-end;
           gap: 0.25rem;
         }
-        
+
         .asset-amount {
           font-weight: 600;
           color: var(--accent-blue);
         }
-        
+
         .asset-percentage {
           font-size: 0.8rem;
           color: var(--text-muted);
         }
-        
+
         .ai-content {
           font-size: 0.95rem;
           line-height: 1.7;
           color: var(--text-muted);
         }
-        
+
         .ai-content h2, .ai-content h3 {
           color: var(--text-primary);
           margin: 1rem 0 0.5rem 0;
           font-size: 1.1rem;
         }
-        
+
         .ai-content ul {
           margin: 0.5rem 0;
           padding-left: 1.5rem;
         }
-        
+
         .ai-content li {
           margin: 0.5rem 0;
         }
-        
+
         .ai-placeholder {
           font-style: italic;
           opacity: 0.6;
         }
-        
+
         .analyze-btn {
           display: flex;
           margin: 0 auto;

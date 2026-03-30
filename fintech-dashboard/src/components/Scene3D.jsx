@@ -1,4 +1,4 @@
-// 3D Coin Component using Three.js
+
 import { useRef, useMemo } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { Environment, ContactShadows, Float } from '@react-three/drei'
@@ -6,7 +6,7 @@ import * as THREE from 'three'
 
 function Coin3D({ color = '#00D9FF', emissive = '#00D9FF' }) {
   const meshRef = useRef()
-  
+
   useFrame((state) => {
     if (meshRef.current) {
       meshRef.current.rotation.y = state.clock.elapsedTime * 0.5
@@ -14,7 +14,6 @@ function Coin3D({ color = '#00D9FF', emissive = '#00D9FF' }) {
     }
   })
 
-  // Create coin geometry with rupees symbol
   const geometry = useMemo(() => {
     const shape = new THREE.Shape()
     const radius = 1.5
@@ -26,7 +25,7 @@ function Coin3D({ color = '#00D9FF', emissive = '#00D9FF' }) {
       bevelSize: 0.05,
       bevelThickness: 0.05
     }
-    
+
     shape.absarc(0, 0, radius, 0, Math.PI * 2, false)
     return new THREE.ExtrudeGeometry(shape, extrusionSettings)
   }, [])
@@ -43,7 +42,7 @@ function Coin3D({ color = '#00D9FF', emissive = '#00D9FF' }) {
           envMapIntensity={1}
         />
       </mesh>
-      {/* Rupees Symbol Text */}
+      {}
       <Float speed={1} rotationIntensity={0.2} floatIntensity={0.5}>
         <mesh position={[0, 0, 0.15]}>
           <planeGeometry args={[1, 1]} />
@@ -61,7 +60,7 @@ function Coin3D({ color = '#00D9FF', emissive = '#00D9FF' }) {
 function Particles() {
   const points = useRef()
   const particleCount = 100
-  
+
   const positions = useMemo(() => {
     const pos = new Float32Array(particleCount * 3)
     for (let i = 0; i < particleCount; i++) {
@@ -104,11 +103,11 @@ export default function Scene3D() {
   return (
     <Canvas
       camera={{ position: [8, 0, 8], fov: 45 }}
-      style={{ 
-        position: 'absolute', 
-        top: 0, 
-        right: 0, 
-        width: '50%', 
+      style={{
+        position: 'absolute',
+        top: 0,
+        right: 0,
+        width: '50%',
         height: '100%',
         zIndex: 1
       }}
@@ -118,10 +117,10 @@ export default function Scene3D() {
       <pointLight position={[-10, 10, 10]} intensity={1} color="#00D9FF" />
       <pointLight position={[10, -10, -10]} intensity={0.5} color="#A855F7" />
       <spotLight position={[0, 10, 0]} angle={0.3} penumbra={1} intensity={1} />
-      
+
       <Coin3D color="#FFD700" emissive="#FFD700" />
       <Particles />
-      
+
       <ContactShadows
         position={[0, -2, 0]}
         opacity={0.3}
@@ -129,7 +128,7 @@ export default function Scene3D() {
         blur={2}
         far={4}
       />
-      
+
       <Environment preset="city" />
     </Canvas>
   )

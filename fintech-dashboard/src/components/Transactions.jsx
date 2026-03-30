@@ -94,13 +94,13 @@ const transactions = [
 export default function Transactions() {
   return (
     <section className="relative py-32 overflow-hidden">
-      {/* Background */}
+      {}
       <div className="absolute inset-0">
         <div className="absolute top-1/2 left-0 w-96 h-96 bg-cyan-500/5 rounded-full blur-[150px]" />
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-6">
-        {/* Section Header */}
+        {}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -116,7 +116,7 @@ export default function Transactions() {
           </p>
         </motion.div>
 
-        {/* Transactions Panel */}
+        {}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -124,7 +124,7 @@ export default function Transactions() {
           transition={{ duration: 0.6 }}
           className="glass-card p-2 max-w-3xl mx-auto"
         >
-          {/* Header */}
+          {}
           <div className="flex items-center justify-between p-6 border-b border-white/5">
             <div className="flex items-center gap-2">
               <Clock />
@@ -135,7 +135,7 @@ export default function Transactions() {
             </button>
           </div>
 
-          {/* Transaction List */}
+          {}
           <div className="divide-y divide-white/5">
             {transactions.map((tx, index) => (
               <motion.div
@@ -148,16 +148,16 @@ export default function Transactions() {
                 className="flex items-center justify-between p-6 cursor-pointer transition-all duration-300 group rounded-xl"
               >
                 <div className="flex items-center gap-4">
-                  {/* Type Icon */}
+                  {}
                   <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${
-                    tx.type === 'buy' 
-                      ? 'bg-green-500/20 text-green-400' 
+                    tx.type === 'buy'
+                      ? 'bg-green-500/20 text-green-400'
                       : 'bg-red-500/20 text-red-400'
                   }`}>
                     {tx.type === 'buy' ? <ArrowUpRight /> : <ArrowDownRight />}
                   </div>
 
-                  {/* Asset Info */}
+                  {}
                   <div>
                     <div className="flex items-center gap-2">
                       <span className="font-semibold text-white">{tx.asset}</span>
@@ -173,7 +173,7 @@ export default function Transactions() {
                   </div>
                 </div>
 
-                {/* Value & Status */}
+                {}
                 <div className="text-right">
                   <div className={`font-semibold ${
                     tx.type === 'buy' ? 'text-green-400' : 'text-red-400'
@@ -188,7 +188,7 @@ export default function Transactions() {
                   </div>
                 </div>
 
-                {/* Hover Glow */}
+                {}
                 <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-r from-cyan-500/5 to-transparent pointer-events-none" />
               </motion.div>
             ))}

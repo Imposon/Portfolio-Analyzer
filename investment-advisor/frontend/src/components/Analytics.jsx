@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { 
-  LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, 
+import {
+  LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
   PieChart, Pie, Cell,
   ScatterChart, Scatter, ZAxis
 } from 'recharts';
@@ -15,20 +15,18 @@ const Analytics = ({ analysisData, portfolio }) => {
 
   const { growth_data, risk_return_data, allocation_data } = analysisData;
 
-  // Prepare allocation data for pie chart
   const allocationChartData = [
     { name: 'Equity', value: allocation_data.equity * 100 },
     { name: 'Debt', value: allocation_data.debt * 100 },
     { name: 'Funds', value: allocation_data.funds * 100 }
   ].filter(item => item.value > 0);
 
-  // Custom tooltip for charts
   const GrowthTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
       return (
-        <div style={{ 
-          background: 'rgba(10, 10, 26, 0.95)', 
-          padding: '12px', 
+        <div style={{
+          background: 'rgba(10, 10, 26, 0.95)',
+          padding: '12px',
           borderRadius: '8px',
           border: '1px solid rgba(255, 255, 255, 0.1)'
         }}>
@@ -46,9 +44,9 @@ const Analytics = ({ analysisData, portfolio }) => {
     if (active && payload && payload.length) {
       const data = payload[0].payload;
       return (
-        <div style={{ 
-          background: 'rgba(10, 10, 26, 0.95)', 
-          padding: '12px', 
+        <div style={{
+          background: 'rgba(10, 10, 26, 0.95)',
+          padding: '12px',
           borderRadius: '8px',
           border: '1px solid rgba(255, 255, 255, 0.1)'
         }}>
@@ -64,9 +62,9 @@ const Analytics = ({ analysisData, portfolio }) => {
   const PieTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
       return (
-        <div style={{ 
-          background: 'rgba(10, 10, 26, 0.95)', 
-          padding: '12px', 
+        <div style={{
+          background: 'rgba(10, 10, 26, 0.95)',
+          padding: '12px',
           borderRadius: '8px',
           border: '1px solid rgba(255, 255, 255, 0.1)'
         }}>
@@ -83,21 +81,21 @@ const Analytics = ({ analysisData, portfolio }) => {
       <div className="container">
         <h2 className="section-title">Portfolio Analytics</h2>
 
-        {/* Tabs */}
+        {}
         <div className="tabs">
-          <button 
+          <button
             className={`tab ${activeTab === 'growth' ? 'active' : ''}`}
             onClick={() => setActiveTab('growth')}
           >
             Growth Projection
           </button>
-          <button 
+          <button
             className={`tab ${activeTab === 'risk' ? 'active' : ''}`}
             onClick={() => setActiveTab('risk')}
           >
             Risk vs Return
           </button>
-          <button 
+          <button
             className={`tab ${activeTab === 'allocation' ? 'active' : ''}`}
             onClick={() => setActiveTab('allocation')}
           >
@@ -105,7 +103,7 @@ const Analytics = ({ analysisData, portfolio }) => {
           </button>
         </div>
 
-        {/* Chart Container */}
+        {}
         <div className="chart-card card">
           {activeTab === 'growth' && (
             <div className="chart-wrapper">
@@ -113,23 +111,23 @@ const Analytics = ({ analysisData, portfolio }) => {
               <ResponsiveContainer width="100%" height={400}>
                 <LineChart data={growth_data} margin={{ top: 20, right: 30, left: 20, bottom: 20 }}>
                   <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
-                  <XAxis 
-                    dataKey="year" 
+                  <XAxis
+                    dataKey="year"
                     stroke="#8888aa"
                     tick={{ fill: '#8888aa' }}
                     label={{ value: 'Years', position: 'bottom', fill: '#8888aa' }}
                   />
-                  <YAxis 
+                  <YAxis
                     stroke="#8888aa"
                     tick={{ fill: '#8888aa' }}
                     tickFormatter={(value) => `₹${(value / 100000).toFixed(1)}L`}
                     label={{ value: 'Value (₹)', angle: -90, position: 'insideLeft', fill: '#8888aa' }}
                   />
                   <Tooltip content={<GrowthTooltip />} />
-                  <Line 
-                    type="monotone" 
-                    dataKey="value" 
-                    stroke="#4f8ef7" 
+                  <Line
+                    type="monotone"
+                    dataKey="value"
+                    stroke="#4f8ef7"
                     strokeWidth={3}
                     dot={{ fill: '#4f8ef7', strokeWidth: 2, r: 4 }}
                     activeDot={{ r: 6, stroke: '#4f8ef7', strokeWidth: 2 }}
@@ -149,9 +147,9 @@ const Analytics = ({ analysisData, portfolio }) => {
               <ResponsiveContainer width="100%" height={400}>
                 <ScatterChart margin={{ top: 20, right: 30, left: 20, bottom: 20 }}>
                   <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
-                  <XAxis 
-                    type="number" 
-                    dataKey="risk_score" 
+                  <XAxis
+                    type="number"
+                    dataKey="risk_score"
                     name="Risk Level"
                     stroke="#8888aa"
                     tick={{ fill: '#8888aa' }}
@@ -160,9 +158,9 @@ const Analytics = ({ analysisData, portfolio }) => {
                     ticks={[1, 2, 3]}
                     label={{ value: 'Risk Level', position: 'bottom', fill: '#8888aa' }}
                   />
-                  <YAxis 
-                    type="number" 
-                    dataKey="expected_return" 
+                  <YAxis
+                    type="number"
+                    dataKey="expected_return"
                     name="Expected Return %"
                     stroke="#8888aa"
                     tick={{ fill: '#8888aa' }}
@@ -171,8 +169,8 @@ const Analytics = ({ analysisData, portfolio }) => {
                   />
                   <ZAxis type="number" dataKey="expected_return" range={[100, 400]} />
                   <Tooltip content={<RiskTooltip />} />
-                  <Scatter 
-                    data={risk_return_data} 
+                  <Scatter
+                    data={risk_return_data}
                     fill="#4f8ef7"
                     stroke="#4f8ef7"
                     strokeWidth={2}
@@ -214,8 +212,8 @@ const Analytics = ({ analysisData, portfolio }) => {
               <div className="legend">
                 {allocationChartData.map((entry, index) => (
                   <div key={index} className="legend-item">
-                    <span 
-                      className="legend-dot" 
+                    <span
+                      className="legend-dot"
                       style={{ backgroundColor: COLORS[index % COLORS.length] }}
                     />
                     <span className="legend-label">{entry.name}</span>
@@ -233,18 +231,18 @@ const Analytics = ({ analysisData, portfolio }) => {
           padding: 4rem 2rem;
           min-height: 100vh;
         }
-        
+
         .container {
           max-width: 1000px;
           margin: 0 auto;
         }
-        
+
         .section-title {
           font-size: 2rem;
           margin-bottom: 2rem;
           text-align: center;
         }
-        
+
         .tabs {
           display: flex;
           gap: 0.5rem;
@@ -254,7 +252,7 @@ const Analytics = ({ analysisData, portfolio }) => {
           border-radius: 12px;
           border: 1px solid var(--border-glass);
         }
-        
+
         .tab {
           flex: 1;
           padding: 0.875rem 1.5rem;
@@ -267,39 +265,39 @@ const Analytics = ({ analysisData, portfolio }) => {
           cursor: pointer;
           transition: var(--transition-smooth);
         }
-        
+
         .tab:hover {
           color: var(--text-primary);
           background: rgba(255, 255, 255, 0.05);
         }
-        
+
         .tab.active {
           background: var(--accent-gradient);
           color: white;
         }
-        
+
         .chart-card {
           padding: 2rem;
         }
-        
+
         .chart-wrapper {
           width: 100%;
         }
-        
+
         .chart-title {
           font-size: 1.25rem;
           margin-bottom: 1.5rem;
           text-align: center;
           color: var(--text-primary);
         }
-        
+
         .chart-subtitle {
           text-align: center;
           color: var(--text-muted);
           font-size: 0.875rem;
           margin-top: 1rem;
         }
-        
+
         .legend {
           display: flex;
           justify-content: center;
@@ -307,35 +305,35 @@ const Analytics = ({ analysisData, portfolio }) => {
           margin-top: 1.5rem;
           flex-wrap: wrap;
         }
-        
+
         .legend-item {
           display: flex;
           align-items: center;
           gap: 0.5rem;
         }
-        
+
         .legend-dot {
           width: 12px;
           height: 12px;
           border-radius: 50%;
         }
-        
+
         .legend-label {
           color: var(--text-muted);
           font-size: 0.9rem;
         }
-        
+
         .legend-value {
           color: var(--text-primary);
           font-weight: 600;
           font-size: 0.9rem;
         }
-        
+
         @media (max-width: 768px) {
           .tabs {
             flex-direction: column;
           }
-          
+
           .legend {
             flex-direction: column;
             gap: 1rem;

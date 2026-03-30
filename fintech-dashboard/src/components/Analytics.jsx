@@ -21,7 +21,6 @@ export default function Analytics() {
   const navigate = useNavigate()
   const [chartData, setChartData] = useState(null)
 
-  // Format currency
   const formatCurrency = (amount) => {
     return new Intl.NumberFormat('en-IN', {
       style: 'currency',
@@ -31,7 +30,6 @@ export default function Analytics() {
     }).format(amount)
   }
 
-  // Generate chart data on component mount
   useEffect(() => {
     if (assets && assets.length > 0) {
       generateChartData()
@@ -39,7 +37,7 @@ export default function Analytics() {
   }, [assets])
 
   const generateChartData = () => {
-    // Pie Chart Data - Asset Allocation
+
     const pieData = assets.map(asset => ({
       name: asset.name,
       value: asset.invested_amount || 0,
@@ -47,11 +45,10 @@ export default function Analytics() {
       color: getAssetColor(asset.category)
     }))
 
-    // Line Chart Data - Portfolio Growth Over Time
     const totalInvestment = assets.reduce((sum, asset) => sum + (asset.invested_amount || 0), 0)
     const expectedReturn = portfolio?.expected_return || 12
     const years = 10
-    
+
     const growthData = []
     for (let year = 0; year <= years; year++) {
       const value = totalInvestment * Math.pow(1 + (expectedReturn / 100), year)
@@ -61,14 +58,12 @@ export default function Analytics() {
       })
     }
 
-    // Bar Chart Data - Returns Comparison
     const barData = assets.map(asset => ({
       name: asset.name.length > 15 ? asset.name.substring(0, 15) + '...' : asset.name,
       expected: asset.expected_return || 0,
       category: asset.category
     }))
 
-    // Risk vs Return Data
     const riskReturnData = assets.map(asset => ({
       name: asset.name.length > 12 ? asset.name.substring(0, 12) + '...' : asset.name,
       risk: getRiskLevel(asset.category),
@@ -87,7 +82,7 @@ export default function Analytics() {
   const getAssetColor = (category) => {
     const colors = {
       'equity': '#10b981',
-      'debt': '#3b82f6', 
+      'debt': '#3b82f6',
       'fund': '#8b5cf6',
       'stock': '#10b981',
       'bond': '#3b82f6',
@@ -123,14 +118,14 @@ export default function Analytics() {
 
   return (
     <section className="relative min-h-screen py-20">
-      {/* Background Elements */}
+      {}
       <div className="absolute inset-0 z-0">
         <div className="absolute top-20 left-20 w-72 h-72 bg-cyan-500/20 rounded-full blur-[120px]" />
         <div className="absolute bottom-20 right-20 w-96 h-96 bg-purple-500/20 rounded-full blur-[120px]" />
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-6">
-        {/* Header */}
+        {}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -155,9 +150,9 @@ export default function Analytics() {
           </motion.button>
         </motion.div>
 
-        {/* Charts Grid */}
+        {}
         <div className="grid lg:grid-cols-2 gap-8 mb-8">
-          {/* Pie Chart - Asset Allocation */}
+          {}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -169,8 +164,8 @@ export default function Analytics() {
               {chartData.pie.map((item, index) => (
                 <div key={index} className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <div 
-                      className="w-4 h-4 rounded-full" 
+                    <div
+                      className="w-4 h-4 rounded-full"
                       style={{ backgroundColor: item.color }}
                     />
                     <span className="text-gray-300 text-sm">{item.name}</span>
@@ -184,7 +179,7 @@ export default function Analytics() {
             </div>
           </motion.div>
 
-          {/* Line Chart - Portfolio Growth */}
+          {}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -193,23 +188,23 @@ export default function Analytics() {
           >
             <h3 className="text-xl font-bold text-white mb-6">Portfolio Growth (10 Years)</h3>
             <div className="relative h-80 w-full">
-              {/* SVG Line Chart */}
+              {}
               <svg className="w-full h-full" viewBox="0 0 600 300" preserveAspectRatio="none">
-                {/* Grid lines */}
+                {}
                 <defs>
                   <pattern id="grid" width="60" height="30" patternUnits="userSpaceOnUse">
                     <path d="M 60 0 L 0 0 0 30" fill="none" stroke="rgba(255,255,255,0.05)" strokeWidth="1"/>
                   </pattern>
                 </defs>
                 <rect width="100%" height="100%" fill="url(#grid)" />
-                
-                {/* Y-axis labels */}
+
+                {}
                 <text x="10" y="15" fill="#6b7280" fontSize="10">Value</text>
-                
-                {/* X-axis labels */}
+
+                {}
                 <text x="10" y="295" fill="#6b7280" fontSize="10">Years</text>
-                
-                {/* Area fill under the line */}
+
+                {}
                 <motion.path
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 0.3 }}
@@ -221,16 +216,16 @@ export default function Analytics() {
                   }).join(' ')} L 550 250 Z`}
                   fill="url(#lineGradient)"
                 />
-                
-                {/* Gradient for area */}
+
+                {}
                 <defs>
                   <linearGradient id="lineGradient" x1="0%" y1="0%" x2="0%" y2="100%">
                     <stop offset="0%" stopColor="#06b6d4" stopOpacity="0.6"/>
                     <stop offset="100%" stopColor="#8b5cf6" stopOpacity="0.1"/>
                   </linearGradient>
                 </defs>
-                
-                {/* The main line */}
+
+                {}
                 <motion.path
                   initial={{ pathLength: 0, opacity: 0 }}
                   animate={{ pathLength: 1, opacity: 1 }}
@@ -246,22 +241,22 @@ export default function Analytics() {
                   strokeLinecap="round"
                   strokeLinejoin="round"
                 />
-                
-                {/* Gradient for stroke */}
+
+                {}
                 <defs>
                   <linearGradient id="strokeGradient" x1="0%" y1="0%" x2="100%" y2="0%">
                     <stop offset="0%" stopColor="#06b6d4"/>
                     <stop offset="100%" stopColor="#8b5cf6"/>
                   </linearGradient>
                 </defs>
-                
-                {/* Data points on the line */}
+
+                {}
                 {chartData.growth.map((point, index) => {
                   const x = 50 + (index / (chartData.growth.length - 1)) * 500
                   const y = 250 - ((point.value - chartData.growth[0].value) / (chartData.growth[chartData.growth.length - 1].value - chartData.growth[0].value)) * 200
                   return (
                     <motion.g key={index}>
-                      {/* Outer glow */}
+                      {}
                       <motion.circle
                         cx={x}
                         cy={y}
@@ -271,7 +266,7 @@ export default function Analytics() {
                         animate={{ scale: 1, opacity: 1 }}
                         transition={{ delay: 0.5 + index * 0.1 }}
                       />
-                      {/* Inner point */}
+                      {}
                       <motion.circle
                         cx={x}
                         cy={y}
@@ -283,7 +278,7 @@ export default function Analytics() {
                         animate={{ scale: 1, opacity: 1 }}
                         transition={{ delay: 0.6 + index * 0.1 }}
                       />
-                      {/* Value label */}
+                      {}
                       {index % 2 === 0 && (
                         <motion.text
                           x={x}
@@ -298,7 +293,7 @@ export default function Analytics() {
                           {formatCurrency(point.value)}
                         </motion.text>
                       )}
-                      {/* Year label */}
+                      {}
                       <motion.text
                         x={x}
                         y="270"
@@ -316,8 +311,8 @@ export default function Analytics() {
                 })}
               </svg>
             </div>
-            
-            {/* Summary Stats Below Chart */}
+
+            {}
             <div className="grid grid-cols-3 gap-4 mt-6 pt-6 border-t border-white/10">
               <div className="text-center">
                 <div className="text-gray-400 text-sm">Initial Investment</div>
@@ -337,7 +332,7 @@ export default function Analytics() {
           </motion.div>
         </div>
 
-        {/* Bar Chart - Returns Comparison */}
+        {}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -365,7 +360,7 @@ export default function Analytics() {
           </div>
         </motion.div>
 
-        {/* Risk vs Return Scatter Plot */}
+        {}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -374,14 +369,14 @@ export default function Analytics() {
         >
           <h3 className="text-xl font-bold text-white mb-6">Risk vs Return Analysis</h3>
           <div className="relative h-64 bg-white/5 rounded-lg p-4">
-            {/* Grid lines */}
+            {}
             <div className="absolute inset-0 grid grid-cols-10 grid-rows-10">
               {Array.from({ length: 100 }).map((_, i) => (
                 <div key={i} className="border border-white/5" />
               ))}
             </div>
-            
-            {/* Data points */}
+
+            {}
             {chartData.riskReturn.map((item, index) => (
               <motion.div
                 key={index}
@@ -402,8 +397,8 @@ export default function Analytics() {
                 </div>
               </motion.div>
             ))}
-            
-            {/* Axes labels */}
+
+            {}
             <div className="absolute bottom-0 left-0 text-xs text-gray-400">Low Risk</div>
             <div className="absolute bottom-0 right-0 text-xs text-gray-400">High Risk</div>
             <div className="absolute top-0 left-0 text-xs text-gray-400">High Return</div>
@@ -411,7 +406,7 @@ export default function Analytics() {
           </div>
         </motion.div>
 
-        {/* Summary Stats */}
+        {}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}

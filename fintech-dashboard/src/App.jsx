@@ -15,7 +15,6 @@ function App() {
   const [isLoading, setIsLoading] = useState(true)
   const [showCursorGlow, setShowCursorGlow] = useState(true)
 
-  // Check for touch device
   useEffect(() => {
     const isTouchDevice = window.matchMedia('(pointer: coarse)').matches
     if (isTouchDevice) {
@@ -29,10 +28,10 @@ function App() {
 
   return (
     <>
-      {/* Loading Screen */}
+      {}
       {isLoading && <Loading onLoadingComplete={handleLoadingComplete} />}
 
-      {/* Main Content */}
+      {}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: isLoading ? 0 : 1 }}
@@ -41,22 +40,22 @@ function App() {
       >
         <InvestmentProvider>
           <Router>
-            {/* Noise Overlay */}
+            {}
             <div className="noise-overlay" />
 
-            {/* Cursor Glow Effect */}
+            {}
             {showCursorGlow && <CursorGlow />}
 
-            {/* Background Gradient Orbs */}
+            {}
             <div className="fixed inset-0 overflow-hidden pointer-events-none">
               <div className="absolute -top-1/4 -left-1/4 w-[800px] h-[800px] bg-cyan-500/10 rounded-full blur-[150px] animate-pulse" />
               <div className="absolute -bottom-1/4 -right-1/4 w-[800px] h-[800px] bg-purple-500/10 rounded-full blur-[150px] animate-pulse" style={{ animationDelay: '2s' }} />
             </div>
 
-            {/* Navigation */}
+            {}
             <Navbar />
 
-            {/* Main Content */}
+            {}
             <main className="relative z-10">
               <Routes>
                 <Route path="/" element={<Hero />} />
@@ -64,8 +63,8 @@ function App() {
                 <Route path="/results" element={<Results />} />
                 <Route path="/analytics" element={<Analytics />} />
               </Routes>
-              
-              {/* Footer on all pages except home */}
+
+              {}
               <Routes>
                 <Route path="/*" element={<Footer />} />
               </Routes>

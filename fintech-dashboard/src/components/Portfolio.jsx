@@ -65,7 +65,6 @@ export default function Portfolio() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [showExplanation, setShowExplanation] = useState(false)
 
-  // Format currency
   const formatCurrency = (amount) => {
     return new Intl.NumberFormat('en-IN', {
       style: 'currency',
@@ -95,12 +94,11 @@ export default function Portfolio() {
     return colors[category.toLowerCase()] || 'from-gray-400 to-gray-500'
   }
 
-  // Show empty state if no portfolio exists
   if (!portfolio || assets.length === 0) {
     return (
       <section id="portfolio" className="relative py-20">
         <div className="max-w-7xl mx-auto px-6">
-          {/* Empty State */}
+          {}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -110,17 +108,17 @@ export default function Portfolio() {
               <Wallet />
               <span className="text-gray-400">No Portfolio Yet</span>
             </div>
-            
+
             <h2 className="text-4xl font-bold gradient-text mb-4">
               Start Your Investment Journey
             </h2>
-            
+
             <p className="text-gray-400 max-w-2xl mx-auto mb-12">
-              Create your first portfolio to get personalized investment recommendations 
+              Create your first portfolio to get personalized investment recommendations
               based on your risk profile and financial goals.
             </p>
 
-            {/* Create Portfolio Button */}
+            {}
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -133,13 +131,12 @@ export default function Portfolio() {
           </motion.div>
         </div>
 
-        {/* Portfolio Modal */}
+        {}
         <PortfolioModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
       </section>
     )
   }
 
-  // Show portfolio results if portfolio exists
   const transformedAssets = assets.map(asset => ({
     name: asset.name || 'Unknown Asset',
     symbol: asset.symbol || asset.ticker || 'N/A',
@@ -154,7 +151,7 @@ export default function Portfolio() {
   return (
     <section id="portfolio" className="relative py-20">
       <div className="max-w-7xl mx-auto px-6">
-        {/* Total Balance Card */}
+        {}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -177,7 +174,7 @@ export default function Portfolio() {
           </div>
         </motion.div>
 
-        {/* Asset Cards Grid */}
+        {}
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           {transformedAssets.map((asset, index) => (
             <motion.div
@@ -189,7 +186,7 @@ export default function Portfolio() {
               whileHover={{ y: -5, rotateX: -5 }}
               className="group glass-card p-6 rounded-xl hover:shadow-xl transition-all duration-300 cursor-pointer"
             >
-              {/* Asset Header */}
+              {}
               <div className="flex items-center justify-between mb-4">
                 <div className={`p-3 rounded-xl bg-gradient-to-r ${asset.color}`}>
                   <asset.icon />
@@ -202,7 +199,7 @@ export default function Portfolio() {
                 </div>
               </div>
 
-              {/* Asset Info */}
+              {}
               <div>
                 <h4 className="font-semibold text-white mb-1">{asset.name}</h4>
                 <p className="text-2xl font-bold text-white mb-2">{asset.value}</p>
@@ -212,7 +209,7 @@ export default function Portfolio() {
           ))}
         </div>
 
-        {/* AI Explanation Section */}
+        {}
         {portfolio?.ai_explanation && showExplanation && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -229,20 +226,20 @@ export default function Portfolio() {
               </button>
             </div>
             <div className="prose prose-invert max-w-none">
-              <div 
-                dangerouslySetInnerHTML={{ 
+              <div
+                dangerouslySetInnerHTML={{
                   __html: portfolio.ai_explanation
                     .replace(/## /g, '<h3 class="text-xl font-bold text-white mb-4">')
                     .replace(/\*\*(.*?)\*\*/g, '<strong class="text-cyan-400">$1</strong>')
                     .replace(/\n/g, '<br class="mb-2">')
-                }} 
+                }}
                 className="text-gray-300 leading-relaxed"
               />
             </div>
           </motion.div>
         )}
 
-        {/* Show Explanation Button */}
+        {}
         {portfolio?.ai_explanation && !showExplanation && (
           <motion.div
             initial={{ opacity: 0 }}
@@ -260,7 +257,7 @@ export default function Portfolio() {
           </motion.div>
         )}
 
-        {/* Action Button */}
+        {}
         {transformedAssets.length > 0 && (
           <motion.div
             initial={{ opacity: 0 }}
@@ -279,7 +276,7 @@ export default function Portfolio() {
         )}
       </div>
 
-      {/* Portfolio Modal */}
+      {}
       <PortfolioModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </section>
   )

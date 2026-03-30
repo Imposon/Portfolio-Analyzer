@@ -11,9 +11,9 @@ export default function CursorGlow() {
     }
 
     const handleMouseOver = (e) => {
-      if (e.target.tagName === 'BUTTON' || 
-          e.target.tagName === 'A' || 
-          e.target.closest('button') || 
+      if (e.target.tagName === 'BUTTON' ||
+          e.target.tagName === 'A' ||
+          e.target.closest('button') ||
           e.target.closest('a')) {
         setIsHovering(true)
       } else {
@@ -32,7 +32,7 @@ export default function CursorGlow() {
 
   return (
     <>
-      {/* Main Cursor Glow */}
+      {}
       <motion.div
         className="fixed pointer-events-none z-[9999] mix-blend-screen"
         animate={{
@@ -50,7 +50,7 @@ export default function CursorGlow() {
         <div className="w-[300px] h-[300px] rounded-full bg-gradient-to-r from-cyan-500/20 to-purple-500/20 blur-[80px]" />
       </motion.div>
 
-      {/* Small Dot Cursor */}
+      {}
       <motion.div
         className="fixed pointer-events-none z-[9999] w-2 h-2 rounded-full bg-white"
         animate={{
@@ -65,7 +65,7 @@ export default function CursorGlow() {
         }}
       />
 
-      {/* Ring around cursor */}
+      {}
       <motion.div
         className="fixed pointer-events-none z-[9998] w-8 h-8 rounded-full border border-white/30"
         animate={{

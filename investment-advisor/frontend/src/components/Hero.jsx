@@ -4,7 +4,7 @@ import '../styles/base.css';
 const Hero = ({ onGetStarted }) => {
   return (
     <section className="hero">
-      {/* Floating background cards */}
+      {}
       <div className="floating-card" style={{ top: '10%', left: '10%', animationDelay: '0s' }}>
         <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Portfolio Value</div>
         <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color: 'var(--accent-blue)' }}>₹12.5L</div>
@@ -45,7 +45,7 @@ const Hero = ({ onGetStarted }) => {
           overflow: hidden;
           padding: 2rem;
         }
-        
+
         .hero::before {
           content: '';
           position: absolute;
@@ -56,20 +56,20 @@ const Hero = ({ onGetStarted }) => {
           background: radial-gradient(circle at 50% 50%, rgba(79, 142, 247, 0.08) 0%, transparent 50%);
           animation: pulse 8s ease-in-out infinite;
         }
-        
+
         .hero-content {
           text-align: center;
           max-width: 700px;
           position: relative;
           z-index: 1;
         }
-        
+
         .hero-title {
           font-size: clamp(2.5rem, 6vw, 4rem);
           margin-bottom: 1.5rem;
           line-height: 1.1;
         }
-        
+
         .hero-subtitle {
           font-size: 1.25rem;
           color: var(--text-muted);
@@ -78,7 +78,7 @@ const Hero = ({ onGetStarted }) => {
           margin-left: auto;
           margin-right: auto;
         }
-        
+
         @media (max-width: 768px) {
           .floating-card {
             display: none;

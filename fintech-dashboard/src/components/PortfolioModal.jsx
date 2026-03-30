@@ -24,7 +24,7 @@ export default function PortfolioModal({ isOpen, onClose }) {
     initial_amount: '',
     risk_tolerance: 'medium',
     investment_horizon: 'medium',
-    goal: 'wealth', // Add financial goal
+    goal: 'wealth',
   })
   const [allocationData, setAllocationData] = useState({
     total_amount: '',
@@ -36,24 +36,23 @@ export default function PortfolioModal({ isOpen, onClose }) {
 
   const handleSubmitCreate = async (e) => {
     e.preventDefault()
-    
-    // Form validation
+
     if (!formData.name.trim()) {
       alert('Please enter a portfolio name')
       return
     }
-    
+
     if (!formData.initial_amount || parseFloat(formData.initial_amount) < 1000) {
       alert('Investment amount must be at least ₹1,000')
       return
     }
-    
+
     try {
       await createPortfolio({
         ...formData,
         initial_amount: parseFloat(formData.initial_amount),
-        // Map investment_horizon to years
-        investment_horizon: formData.investment_horizon === 'short' ? 3 : 
+
+        investment_horizon: formData.investment_horizon === 'short' ? 3 :
                          formData.investment_horizon === 'medium' ? 7 : 15,
       })
       onClose()
@@ -85,7 +84,7 @@ export default function PortfolioModal({ isOpen, onClose }) {
       exit={{ opacity: 0 }}
       className="fixed inset-0 z-50 flex items-center justify-center p-4"
     >
-      {/* Backdrop */}
+      {}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -94,7 +93,7 @@ export default function PortfolioModal({ isOpen, onClose }) {
         onClick={onClose}
       />
 
-      {/* Modal */}
+      {}
       <motion.div
         initial={{ scale: 0.95, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
@@ -102,7 +101,7 @@ export default function PortfolioModal({ isOpen, onClose }) {
         className="relative glass-card p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto"
         data-portfolio-modal
       >
-        {/* Header */}
+        {}
         <div className="flex items-center justify-between mb-8">
           <h2 className="text-3xl font-bold gradient-text">Portfolio Manager</h2>
           <button
@@ -113,7 +112,7 @@ export default function PortfolioModal({ isOpen, onClose }) {
           </button>
         </div>
 
-        {/* Tabs */}
+        {}
         <div className="flex gap-2 mb-8">
           <button
             onClick={() => setActiveTab('create')}
@@ -137,7 +136,7 @@ export default function PortfolioModal({ isOpen, onClose }) {
           </button>
         </div>
 
-        {/* Create Portfolio Form */}
+        {}
         {activeTab === 'create' && (
           <motion.form
             initial={{ opacity: 0, y: 20 }}
@@ -233,7 +232,7 @@ export default function PortfolioModal({ isOpen, onClose }) {
           </motion.form>
         )}
 
-        {/* Allocate Funds Form */}
+        {}
         {activeTab === 'allocate' && (
           <motion.form
             initial={{ opacity: 0, y: 20 }}
@@ -257,7 +256,7 @@ export default function PortfolioModal({ isOpen, onClose }) {
               />
             </div>
 
-            {/* Allocation Sliders */}
+            {}
             <div className="space-y-4">
               <div>
                 <div className="flex justify-between mb-2">
@@ -320,7 +319,7 @@ export default function PortfolioModal({ isOpen, onClose }) {
               </div>
             </div>
 
-            {/* Total Percentage */}
+            {}
             <div className="glass p-4 rounded-xl">
               <div className="flex justify-between items-center">
                 <span className="text-gray-300">Total Allocation</span>

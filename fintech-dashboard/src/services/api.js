@@ -1,11 +1,10 @@
-// API service for investment advisor backend
+
 const API_BASE_URL = 'http://localhost:8000'
 
-// Helper function for fetch with timeout
 const fetchWithTimeout = async (url, options, timeout = 20000) => {
   const controller = new AbortController()
   const id = setTimeout(() => controller.abort(), timeout)
-  
+
   try {
     const response = await fetch(url, {
       ...options,
@@ -23,10 +22,10 @@ const fetchWithTimeout = async (url, options, timeout = 20000) => {
 }
 
 class InvestmentAdvisorAPI {
-  // Portfolio endpoints
+
   async generatePortfolio(data) {
     console.log('Generating portfolio with data:', data)
-    
+
     try {
       const response = await fetchWithTimeout(
         `${API_BASE_URL}/portfolio/generate-portfolio`,
@@ -42,41 +41,38 @@ class InvestmentAdvisorAPI {
             goal: data.goal
           }),
         },
-        15000 // 15 second timeout
+        15000
       )
-      
+
       if (!response.ok) {
         const error = await response.json()
         throw new Error(error.detail || 'Failed to generate portfolio')
       }
-      
+
       const result = await response.json()
       console.log('Portfolio generated successfully:', result)
       return result
-      
+
     } catch (error) {
       console.error('Error generating portfolio:', error)
       console.log('Falling back to mock data...')
-      
-      // Return mock data as fallback
+
       return this.getMockPortfolioData(data)
     }
   }
 
-  // Mock data for fallback when backend is unavailable
   getMockPortfolioData(data) {
     const amount = data.amount || 100000
     const risk = data.risk || 'moderate'
-    
-    // Different allocations based on risk
+
     const allocations = {
       conservative: { equity: 0.3, debt: 0.5, fund: 0.15, commodity: 0.05 },
       moderate: { equity: 0.5, debt: 0.3, fund: 0.15, commodity: 0.05 },
       aggressive: { equity: 0.7, debt: 0.15, fund: 0.1, commodity: 0.05 }
     }
-    
+
     const alloc = allocations[risk] || allocations.moderate
-    
+
     return {
       portfolio_id: 1,
       portfolio_type: risk,
@@ -94,7 +90,6 @@ class InvestmentAdvisorAPI {
     }
   }
 
-  // AI Analysis endpoints
   async getAIAnalysis(data) {
     try {
       const response = await fetchWithTimeout(
@@ -109,32 +104,30 @@ class InvestmentAdvisorAPI {
             assets: data.assets
           }),
         },
-        20000 // 20 second timeout
+        20000
       )
-      
+
       if (!response.ok) {
         const error = await response.json()
         throw new Error(error.detail || 'Failed to get AI analysis')
       }
-      
+
       return await response.json()
     } catch (error) {
       console.error('Error getting AI analysis:', error)
       console.log('Falling back to mock AI analysis...')
-      
-      // Return mock analysis as fallback
+
       return this.getMockAIAnalysis(data)
     }
   }
 
-  // Mock AI analysis for fallback
   getMockAIAnalysis(data) {
     const portfolio = data.portfolio || {}
     const assets = data.assets || []
     const totalValue = assets.reduce((sum, asset) => sum + (asset.invested_amount || 0), 0)
     const avgReturn = portfolio.expected_return || 12
     const dailyRevenue = totalValue > 0 ? (totalValue * (avgReturn / 100)) / 365 : 0
-    
+
     return {
       analysis: `## AI Investment Analysis
 
@@ -177,7 +170,6 @@ Based on your total investment of **₹${totalValue.toLocaleString('en-IN')}** a
     }
   }
 
-  // Health check
   async healthCheck() {
     try {
       const response = await fetch(`${API_BASE_URL}/health`)
@@ -189,7 +181,6 @@ Based on your total investment of **₹${totalValue.toLocaleString('en-IN')}** a
     }
   }
 
-  // Legacy methods for compatibility
   getCategoryFromName(name) {
     if (!name) return 'stock'
     const lowerName = name.toLowerCase()
@@ -200,13 +191,13 @@ Based on your total investment of **₹${totalValue.toLocaleString('en-IN')}** a
   }
 
   async getPortfolio() {
-    // This method is deprecated in the new flow
+
     console.warn('getPortfolio() is deprecated. Use generatePortfolio() instead.')
     return null
   }
 
   async createPortfolio(data) {
-    // Legacy method - redirect to new generatePortfolio
+
     console.warn('createPortfolio() is deprecated. Use generatePortfolio() instead.')
     return this.generatePortfolio({
       amount: data.initial_amount,
@@ -217,7 +208,7 @@ Based on your total investment of **₹${totalValue.toLocaleString('en-IN')}** a
   }
 
   async allocateFunds(data) {
-    // Legacy method - redirect to new generatePortfolio
+
     console.warn('allocateFunds() is deprecated. Use generatePortfolio() instead.')
     return this.generatePortfolio({
       amount: data.total_amount,
@@ -228,7 +219,7 @@ Based on your total investment of **₹${totalValue.toLocaleString('en-IN')}** a
   }
 
   async getAnalysis() {
-    // Legacy method - return mock data
+
     console.warn('getAnalysis() is deprecated.')
     return {
       overview: {
@@ -241,7 +232,7 @@ Based on your total investment of **₹${totalValue.toLocaleString('en-IN')}** a
   }
 
   async getRecommendations() {
-    // Legacy method - return mock data
+
     console.warn('getRecommendations() is deprecated.')
     return {
       recommendations: [
@@ -253,13 +244,13 @@ Based on your total investment of **₹${totalValue.toLocaleString('en-IN')}** a
   }
 
   async getRiskAnalysis(data) {
-    // Legacy method - throw error to encourage new flow
+
     console.warn('getRiskAnalysis() is deprecated.')
     throw new Error('Use the new portfolio generation flow instead')
   }
 
   async getAIInsights(query) {
-    // Legacy method - throw error to encourage new flow
+
     console.warn('getAIInsights() is deprecated.')
     throw new Error('Use the new AI analysis flow instead')
   }

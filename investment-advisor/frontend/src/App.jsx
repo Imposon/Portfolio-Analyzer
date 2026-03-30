@@ -11,7 +11,7 @@ const App = () => {
   const [analysisData, setAnalysisData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  
+
   const inputRef = useRef(null);
   const dashboardRef = useRef(null);
   const analyticsRef = useRef(null);
@@ -23,13 +23,12 @@ const App = () => {
   const handleGeneratePortfolio = async (formData) => {
     setLoading(true);
     setError(null);
-    
+
     try {
       const data = await generatePortfolio(formData);
       setPortfolio(data);
       setAnalysisData(null);
-      
-      // Scroll to dashboard after a short delay
+
       setTimeout(() => {
         dashboardRef.current?.scrollIntoView({ behavior: 'smooth' });
       }, 100);
@@ -44,8 +43,7 @@ const App = () => {
     try {
       const data = await getAnalysis(portfolioId);
       setAnalysisData(data);
-      
-      // Scroll to analytics
+
       setTimeout(() => {
         analyticsRef.current?.scrollIntoView({ behavior: 'smooth' });
       }, 100);
@@ -57,7 +55,7 @@ const App = () => {
   return (
     <div className="app">
       <Hero onGetStarted={scrollToInput} />
-      
+
       <div ref={inputRef}>
         <InputForm onSubmit={handleGeneratePortfolio} loading={loading} />
       </div>
@@ -97,7 +95,7 @@ const App = () => {
           z-index: 1000;
           backdrop-filter: blur(10px);
         }
-        
+
         .error-banner button {
           background: white;
           color: #ef4444;

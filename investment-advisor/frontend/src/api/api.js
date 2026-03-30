@@ -9,15 +9,6 @@ const api = axios.create({
   }
 });
 
-/**
- * Generate a portfolio recommendation
- * @param {Object} data - Portfolio request data
- * @param {number} data.amount - Investment amount
- * @param {string} data.risk - Risk level (low, medium, high)
- * @param {number} data.horizon - Time horizon in years
- * @param {string} data.goal - Financial goal (wealth, tax, passive, capital)
- * @returns {Promise<Object>} Portfolio response with allocation, assets, and AI explanation
- */
 export const generatePortfolio = async (data) => {
   try {
     const response = await api.post('/portfolio/generate-portfolio', data);
@@ -28,11 +19,6 @@ export const generatePortfolio = async (data) => {
   }
 };
 
-/**
- * Get analysis data for a portfolio
- * @param {number} portfolioId - Portfolio ID
- * @returns {Promise<Object>} Analysis data with growth, risk-return, and allocation
- */
 export const getAnalysis = async (portfolioId) => {
   try {
     const response = await api.get(`/analysis/get-analysis/${portfolioId}`);
@@ -43,10 +29,6 @@ export const getAnalysis = async (portfolioId) => {
   }
 };
 
-/**
- * Health check
- * @returns {Promise<Object>} Health status
- */
 export const checkHealth = async () => {
   try {
     const response = await api.get('/health');
