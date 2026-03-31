@@ -1,29 +1,17 @@
 {
   "version": 2,
-  "builds": [
+  "framework": "vite",
+  "buildCommand": "cd fintech-dashboard && npm install && npm run build",
+  "outputDirectory": "fintech-dashboard/dist",
+  "installCommand": "",
+  "rewrites": [
     {
-      "src": "fintech-dashboard/package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "dist"
-      }
+      "source": "/api/(.*)",
+      "destination": "/api/index.py"
     },
     {
-      "src": "api/index.py",
-      "use": "@vercel/python"
+      "source": "/(.*)",
+      "destination": "/"
     }
-  ],
-  "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "/api/index.py"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/fintech-dashboard/$1"
-    }
-  ],
-  "env": {
-    "PYTHONPATH": "/api"
-  }
+  ]
 }
