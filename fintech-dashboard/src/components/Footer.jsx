@@ -78,7 +78,7 @@ export default function Footer() {
             className="pt-8 border-t border-white/10"
           >
             <p className="text-sm text-gray-500">
-              © 2025 FINEO. All rights reserved.
+              Imposon Project
             </p>
           </motion.div>
         </motion.div>
