@@ -12,7 +12,6 @@ engine = create_engine(
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 class UserInput(Base):
-    """Stores user investment preferences and parameters."""
     __tablename__ = "user_inputs"
     id = Column(Integer, primary_key=True, index=True)
     amount = Column(Float, nullable=False)
@@ -22,7 +21,6 @@ class UserInput(Base):
     created_at = Column(DateTime, default=datetime.utcnow)
     portfolios = relationship("Portfolio", back_populates="user_input", cascade="all, delete-orphan")
 class Portfolio(Base):
-    """Stores generated portfolio allocation and AI explanation."""
     __tablename__ = "portfolios"
     id = Column(Integer, primary_key=True, index=True)
     user_input_id = Column(Integer, ForeignKey("user_inputs.id"), nullable=False)
@@ -37,7 +35,6 @@ def init_db():
     os.makedirs(data_dir, exist_ok=True)
     Base.metadata.create_all(bind=engine)
 def get_db():
-    """Get database session dependency for FastAPI."""
     db = SessionLocal()
     try:
         yield db
