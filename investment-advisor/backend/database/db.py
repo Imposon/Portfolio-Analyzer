@@ -30,7 +30,6 @@ class Portfolio(Base):
     created_at = Column(DateTime, default=datetime.utcnow)
     user_input = relationship("UserInput", back_populates="portfolios")
 def init_db():
-    """Initialize the database and create all tables."""
     data_dir = os.path.dirname(DB_PATH)
     os.makedirs(data_dir, exist_ok=True)
     Base.metadata.create_all(bind=engine)
