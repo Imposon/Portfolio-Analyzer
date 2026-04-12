@@ -5,6 +5,13 @@ A full-stack web application that helps users analyze their investment portfolio
  **Live Demo:** https://portfolio-analyzer-ashy.vercel.app/
 
 ---
+![Uploading Screenshot 2026-04-12 at 21.36.42.png…]()
+![Uploading Screenshot 2026-04-12 at 21.36.51.png…]()
+![Uploading Screenshot 2026-04-12 at 21.36.15.png…]()
+<img width="1800" height="1169" alt="Screenshot 2026-04-12 at 21 36 04" src="https://github.com/user-attachments/assets/4ff9f4d0-1d2f-4ce1-8e78-734c903e12dc" />
+<img width="1800" height="1169" alt="Screenshot 2026-04-12 at 21 35 55" src="https://github.com/user-attachments/assets/6ae18eb5-a057-482f-bfa3-2b0b4d69ee09" />
+
+---
 
 ## Overview
 
